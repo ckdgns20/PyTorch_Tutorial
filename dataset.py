@@ -32,8 +32,9 @@ labels_map = {
 }
 figure = plt.figure(figsize=(8, 8))
 cols, rows = 3, 3
-for i in range(1, cols * rows + 1):
-    sample_idx = torch.randint(len(training_data), size=(1,)).item()
+for i in range(1, cols * rows + 1): # range(start, stop) 에서 stop에 해당하는값은 포함되지 않는다.
+    sample_idx = torch.randint(low=0, high=len(training_data), size=(1,)).item()
+    sample_idx = int(sample_idx)
     img, label = training_data[sample_idx]
     figure.add_subplot(rows, cols, i)
     plt.title(labels_map[label])
