@@ -57,7 +57,10 @@ class CustomImageDataset(Dataset):
         return len(self.img_labels)
 
     def __getitem__(self, idx):
-        img_path = os.path.join(self.img_dir, self.img_labels.iloc[idx, 0]) # type: ignore
+        img_name = str(self.img_labels.iloc[idx, 0])
+        img_dir = str(self.img_dir)
+        img_path = os.path.join(img_dir, img_name)
+        print(f"img_path: {img_path}")
         image = read_image(img_path)
         label = self.img_labels.iloc[idx, 1]
         if self.transform:
@@ -65,8 +68,10 @@ class CustomImageDataset(Dataset):
         if self.target_transform:
             label = self.target_transform(label)
         return image, label
-    
-    
+          
+
+
+
 from torch.utils.data import DataLoader
 
 train_dataloader = DataLoader(training_data, batch_size=64, shuffle=True)
